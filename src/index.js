@@ -81,7 +81,8 @@ class Display extends React.Component {
         if( this.props.gameStatus==null ){
             gameTitle = "Next Move for " + (this.props.stepsNumber %2==0 ? "X"  : "O");
         }else{
-            gameTitle = this.props.gameStatus + " Wins";
+            if(this.props.gameStatus == "Draw") gameTitle = "It's a draw!"
+            else gameTitle = this.props.gameStatus + " Wins";
         }
 
         let buttons = [];
@@ -141,6 +142,10 @@ class TTT extends React.Component {
         oldHistory.push(curSquares);
         
         let newGameStatus = getGameStatus(curSquares);
+
+        if(this.state.steps == 8 && newGameStatus == null){
+            newGameStatus = "Draw";
+        }
 
         this.setState({
             history : oldHistory,
